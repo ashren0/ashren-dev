@@ -2,3 +2,7 @@
 @plugin "@tailwindcss/typography";
 @import "./typography.css";
 @import "./theme.css";
+
+.font-header {
+  font-family: "Ethnocentric", ui-sans-serif, system-ui, sans-serif;
+}
