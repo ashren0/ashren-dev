@@ -1,0 +1,28 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import SimpleHoverLink from "../components/links/SimpleHoverLink.astro";
+
+const { frontmatter } = Astro.props;
+---
+
+<BaseLayout title={frontmatter.title} image={frontmatter.image.url} description={frontmatter.description}>
+  <article class="prose max-w-3xl mx-auto py-8">
+    <h1>{frontmatter.title}</h1>
+    <p class="text-sm text-muted mb-6">
+      Posted on
+      {
+        new Date(frontmatter.pubDate).toLocaleDateString(undefined, {
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        })
+      } by <span class="font-medium">{frontmatter.author}</span>
+    </p>
+    <section class="mb-8">
+      <slot />
+    </section>
+    <div class="text-accent space-x-2">
+      {frontmatter.tags.map((tag: string) => <SimpleHoverLink href={`/tags/${tag}`} label={`#${tag}`} />)}
+    </div>
+  </article>
+</BaseLayout>

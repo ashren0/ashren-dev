@@ -1,0 +1,11 @@
+---
+const { href, target = "_parent", label = null, icon: Icon = null } = Astro.props;
+---
+
+<a
+  href={href}
+  target={target}
+  class="inline-flex items-center gap-2 relative transition duration-200 ease-out hover:text-highlight hover:brightness-110">
+  {Icon && <Icon />}
+  {label && label}
+</a>

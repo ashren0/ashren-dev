@@ -1,0 +1,37 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import SimpleHoverLink from "./links/SimpleHoverLink.astro";
+
+const { post, badge = false } = Astro.props as { post: CollectionEntry<"posts">; badge?: boolean };
+---
+
+<article class="bg-surface rounded-2xl overflow-hidden shadow-lg transition duration-300 hover:-translate-y-1">
+  <a href={`/${post.slug}`} class="relative">
+    <Image src={post.data.image.url} alt={post.data.image.alt} width={640} height={320} loading="eager" />
+    {
+      badge && (
+        <span class="font-bold bg-accent text-white text-xs rounded-full absolute top-3 left-3 px-2 py-0.5">
+          {post.data.category}
+        </span>
+      )
+    }
+  </a>
+  <div class="flex flex-col gap-2 p-5">
+    <h3 class="font-semibold text-xl text-heading">
+      <SimpleHoverLink href={`/${post.slug}`} label={post.data.title} />
+    </h3>
+    <p class="text-xs text-muted">
+      {
+        new Date(post.data.pubDate).toLocaleDateString(undefined, {
+          month: "short",
+          day: "numeric",
+          year: "numeric"
+        })
+      }
+    </p>
+    <p class="text-sm text-muted-foreground line-clamp-3">
+      {post.data.description}
+    </p>
+  </div>
+</article>

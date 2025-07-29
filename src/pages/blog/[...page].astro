@@ -1,0 +1,17 @@
+---
+import type { GetStaticPathsOptions } from "astro";
+import { getCollection } from "astro:content";
+import { PAGINATE_PAGE_SIZE } from "astro:env/client";
+import { sortPostsByDate } from "../../scripts/sort.js";
+import PaginateLayout from "../../layouts/PaginateLayout.astro";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const posts = await getCollection("posts", ({ data }) => data.category === "blog");
+  const latestPosts = sortPostsByDate(posts);
+  return paginate(latestPosts, { pageSize: PAGINATE_PAGE_SIZE });
+}
+
+const { page } = Astro.props;
+---
+
+<PaginateLayout page={page} title=`Ashren's Blog - Page ${page.currentPage}` description="Ashren's blog posts" />

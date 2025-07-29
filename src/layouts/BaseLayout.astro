@@ -1,0 +1,82 @@
+---
+import "../styles/global.css";
+import { Sun, Moon, Menu } from "@lucide/astro";
+import HeaderLogo from "../images/logo.svg";
+import FooterLogo from "../images/footer.svg";
+import FancyHoverLink from "../components/links/FancyHoverLink.astro";
+import SimpleHoverLink from "../components/links/SimpleHoverLink.astro";
+import NavigationLinks from "../components/links/NavigationLinks.astro";
+import GithubIcon from "../components/icons/GithubIcon.astro";
+import MastodonIcon from "../components/icons/MastodonIcon.astro";
+import MatrixIcon from "../components/icons/MatrixIcon.astro";
+
+const { title = "Ashren's Website", image = "/favicon.png", description = "Ashren's website" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:image" content={image} />
+    <meta property="og:site_name" content="Ashren's Blog" />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <title>{title}</title>
+    <script>
+      import "../scripts/menu.js";
+      import "../scripts/theme.js";
+    </script>
+  </head>
+  <body class="font-sans bg-background text-foreground flex flex-col min-h-screen">
+    <header class="bg-header text-accent shadow-lg flex items-center justify-between sticky top-0 z-10 px-4 py-3">
+      <a href="/"><HeaderLogo width={150} height={150} /></a>
+      <nav class="text-lg hidden md:flex space-x-8">
+        <NavigationLinks />
+      </nav>
+      <div class="flex space-x-2">
+        <button id="theme-toggle" class="cursor-pointer text-muted">
+          <Sun id="icon-sun" />
+          <Moon id="icon-moon" />
+        </button>
+        <button id="menu-toggle" class="md:hidden cursor-pointer text-muted">
+          <Menu />
+        </button>
+      </div>
+    </header>
+    <nav id="mobile-menu" class="hidden md:hidden bg-header text-accent flex-col space-x-8 space-y-4 py-3 px-4">
+      <NavigationLinks />
+    </nav>
+    <main class="flex-1">
+      <slot />
+    </main>
+    <footer class="bg-header text-muted text-sm px-4 py-3 w-full">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+        <div class="flex flex-col space-y-1 md:space-y-0">
+          <a href="/"><FooterLogo width={100} height={25} /></a>
+          <p class="text-muted">BCS, Sec+ (in-progress)</p>
+          <p class="mt-2">&copy; {new Date().getFullYear()} Ashren. All rights reserved.</p>
+        </div>
+        <nav class="flex flex-col space-y-1 md:space-y-0 md:flex-row md:space-x-6">
+          <FancyHoverLink href="/privacy" label="Privacy" />
+          <FancyHoverLink href="/contact" label="Contact" />
+          <FancyHoverLink href="/about" label="About" />
+        </nav>
+        <nav class="flex space-x-3">
+          <SimpleHoverLink href="https://www.github.com/devAshren" icon={GithubIcon} target="_blank" />
+          <SimpleHoverLink href="https://www.github.com/devAshren" icon={MastodonIcon} target="_blank" />
+          <SimpleHoverLink href="https://www.github.com/devAshren" icon={MatrixIcon} target="_blank" />
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>
